@@ -3,6 +3,8 @@ import { Backend } from './backend'
 
 const PROXY_HEADER_ALLOW_LIST: string[] = ["accept", "user-agent", "accept-encoding"]
 
+const validActionNames = new Set(["manifests", "blobs", "tags", "referrers"])
+
 // const ORG_NAME_BACKEND:{ [key: string]: string; } = {
 //   "gcr": "https://gcr.io",
 //   "k8sgcr": "https://k8s.gcr.io",
@@ -45,7 +47,7 @@ function rewritePath(orgName: string | null, pathname: string): string {
 
   // /v2/repo/manifests/xxx -> /v2/library/repo/manifests/xxx
   // /v2/repo/blobs/xxx -> /v2/library/repo/blobs/xxx
-  if (orgName === null && splitedPath.length === 5 && (splitedPath[3] === "manifests" || splitedPath[3] === "blobs")) {
+  if (orgName === null && splitedPath.length === 5 && validActionNames.has(splitedPath[3])) {
     splitedPath = [splitedPath[0], splitedPath[1], "library", splitedPath[2], splitedPath[3], splitedPath[4]]
   }
 
