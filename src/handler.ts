@@ -43,9 +43,10 @@ function hostByOrgName(orgName: string|null): string {
 function rewritePath(orgName: string | null, pathname: string): string {
   let splitedPath = pathname.split("/");
 
-  // /v2/repo -> /v2/library/repo
-  if (orgName === null && splitedPath.length === 3) {
-    splitedPath = [splitedPath[0], splitedPath[1], "library", splitedPath[2]]
+  // /v2/repo/manifests/xxx -> /v2/library/repo/manifests/xxx
+  // /v2/repo/blobs/xxx -> /v2/library/repo/blobs/xxx
+  if (orgName === null && splitedPath.length === 5 && (splitedPath[3] === "manifests" || splitedPath[3] === "blobs")) {
+    splitedPath = [splitedPath[0], splitedPath[1], "library", splitedPath[2], splitedPath[3], splitedPath[4]]
   }
 
   return splitedPath.join("/")
