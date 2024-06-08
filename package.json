@@ -4,12 +4,9 @@
   "description": "Cloudflare worker TypeScript template",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development npm run build",
-    "build": "webpack",
-    "format": "prettier --write '**/*.{ts,js,css,json,md}'",
-    "test:clean": "rimraf ./transpiled/src ./transpiled/test",
-    "test": "npm run test:clean && npm run transpile && mocha --require source-map-support/register --recursive transpiled/test",
-    "transpile": "tsc --project ./test"
+    "dev": "npx wrangler dev",
+    "deploy": "npx wrangler deploy",
+    "format": "prettier --write '**/*.{ts,js,css,json,md}'"
   },
   "author": "author",
   "license": "MIT OR Apache-2.0",
